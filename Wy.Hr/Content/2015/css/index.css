@@ -1,0 +1,51 @@
+body{ font-family:'微软雅黑','黑体','宋体';}
+a {
+    text-decoration:none;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, dl, dt, dd, span { padding: 0; margin: 0; }
+input{ margin:0; padding:0; vertical-align:middle;}
+.fl{ float:left;}
+
+.clearfix:after { content:"."; clear:both; display:block; height:0; visibility:hidden; }
+.clearfix { display:block; }
+.ui-header{ width:100%; height:75px; background:#32323a;}
+.ui-header .header{ width:1200px; margin:0 auto; height:75px; line-height:75px; color:#fff;}
+.login-box{ width:300px;border:1px solid #dcdcdc; background:#fff; padding:30px 50px; color:#333; font-size:14px;border-radius:10px; overflow:hidden; position:absolute; left:50%; top:50%; margin:-168px 0 0 -200px}
+.login-img{ float:right; width:300px;}
+.login-img img{ width:300px; height:275px;}
+.login{ width:300px; padding:20px 50px 20px 0; float:left;}
+.login h2{ font-size:20px; font-weight:bold; margin-bottom:40px;}
+.login p{ overflow:hidden; line-height:38px;}
+.login .control-group{ position:relative; margin-bottom:20px; transition: all 0.25s ease 0s;}
+.login .text{ width:248px; border:1px solid #ccc; background:#fff; padding:0 40px 0 10px; vertical-align:middle; height:40px; line-height:40px; border-radius:5px;}
+.login .label1{ font-size:20px; color:#ccc; position:absolute; left:267px; top:12px;}
+.login .text:focus{ border-color:#2DAFCB;}
+.login .text:focus + .label1{ color:#2DAFCB;}
+.login label{ vertical-align:middle; color:#666; margin-left:4px;}
+.login .forget{ color:#666; vertical-align:middle; margin-left:22px; text-decoration:none;}
+.login .forget:hover{ color:#25a3be; text-decoration:underline;}
+.login .submit{ background:#2DAFCB; border:1px solid #2DAFCB; border-radius:5px; padding:12px 0; cursor:pointer; text-align:center; width:120px; color:#fff; vertical-align:middle; float:right;}
+
+.login .submit:hover{ background:#25a3be;}
+.input-btn{ width:300px; margin:12px 0 0 12px;}
+.search-btn{ width:250px; margin-bottom:10px; overflow:hidden;}
+#dropdownMenuDivider{ width:230px; text-align:left;}
+#dropdownMenuDivider .caret{ float:right; margin-top:-11px;}
+#page-inner th,#page-inner td{ text-align:center;}
+#page-inner th{ background:#eee;}
+#page-inner td{ background:#fff;}
+#page-inner .rule-add td{ text-align:left; padding-left:20px;}
+#page-inner .rule-add .th1{ padding-top:14px;}
+#page-inner .rule-add .text1{ width:300px;}
+#page-inner .rule-add .rule-add-btn{ padding-left:260px;}
+#page-inner .node-add .rule-add-btn{ padding-left:305px;}
+.rule-add a{ display:inline-block; border:1px solid #ccc; border-radius:4px; width:85px; height:25px; text-align:center; line-height:24px; margin-right:12px;}
+.rule-add a:hover{ background:#e6e6e6; text-decoration:none;}
+#dataTables-example_paginate ul{ margin:0;}
+.host-state{ border:1px solid #ccc; padding:20px; background:#fff; margin-bottom:20px;}
+.host-state span{ color:#f60;}
+.host-state .label1{ font-weight:normal; padding-left:70px;}
+#dropdownMenuDivider a span{ padding-right:18px;}
+#page-inner,#page-wrapper{ min-height:inherit;}
+.page-inner-btn{ margin-bottom:10px; overflow:hidden; text-align:right;}
+.table > tbody + tbody{ border-top:0 none;}

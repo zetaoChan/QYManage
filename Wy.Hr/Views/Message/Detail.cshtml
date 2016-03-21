@@ -1,0 +1,9 @@
+﻿<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-body messageDetail">
+            <h2 ng-bind-html="itemModel.title | to_trusted"></h2>
+            <div class="messageDate">发布时间：<span>{{itemModel.messageDate | date:'yyyy-MM-dd'}}{{itemModel.messageType | MessageType}}</span></div>
+            <div class="messageContent" ng-bind-html="itemModel.contents | to_trusted"></div>
+        </div>
+    </div>
+</div>

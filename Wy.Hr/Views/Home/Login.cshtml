@@ -1,0 +1,53 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
+    <title>登录</title>
+    <link href="~/content/2015/css/font-awesome.css" rel="stylesheet" />
+    <link href='/content/2015/css/index.css' rel='stylesheet' type='text/css' />
+    <!-- jQuery Js -->
+    <script src="~/content/2015/js/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="/content/2015/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="~/content/2015/js/jquery.metisMenu.js"></script>
+    <!-- Custom Js -->
+    <script src="/content/2015/js/custom-scripts.js"></script>
+    <script src="/content/js/angular.min.js"></script>
+    <script src="/Content/js/sea.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        seajs.config({
+            base: "/content/",
+            alias: {
+            }
+        });
+        seajs.use("pages/login.js", function () {
+            angular.bootstrap(document, ['app']);
+        });
+    </script>
+</head>
+<body style="background:url(/content/2015/css/img/login_bg.jpg) no-repeat 0 0;">
+    <div class="login-box">
+        <div class="login">
+            <h2>企业办公管理系统</h2>
+            <form ng-controller="loginController">
+                <div class="control-group">
+                    <input class="form-control text" placeholder="账号" ng-model="username" name="username" type="text" autofocus><label class="label1 fa fa-user"></label>
+                </div>
+                <div class="control-group">
+                    <input class="form-control text" placeholder="密码" ng-model="password" name="password" type="password" value=""><label class="label1 fa fa-lock"></label>
+                </div>
+                <input type="checkbox"><label>记住我</label><a href="###" class="forget">忘记密码</a>
+                <button class="submit" id="btnLogin" ng-click="login()" ng-disabled="isLoading">
+                    <span ng-if="isLoading==false">登陆</span>
+                    <span ng-if="isLoading==true">正在登陆...</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>企业办公管理系统</title>
+    <!-- Bootstrap Styles-->
+    <link href="/content/2015/css/bootstrap.css" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link href="/content/2015/css/font-awesome.css" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link href="/content/2015/css/custom-styles.css" rel="stylesheet" />
+    <!-- Google Fonts-->
+    <link href='/content/2015/css/opensans.css' rel='stylesheet' type='text/css' />
+    <link href='/content/2015/css/index.css' rel='stylesheet' type='text/css' />
+    <link href="/content/js/artDialog/css/ui-dialog.css" rel="stylesheet" type="text/css" />
+    <!-- angular tree -->
+    <link rel="stylesheet" type="text/css" href="~/Content/js/angular-tree-control-master/css/tree-control.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/js/angular-tree-control-master/css/tree-control-attribute.css">
+    @RenderSection("head", required: false)
+</head>
+<body>
+    <div id="wrapper">
+        @RenderBody()
+    </div>
+    <!-- /. WRAPPER  -->
+    <!-- jQuery Js -->
+    <script src="/content/2015/js/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="/content/2015/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="/content/2015/js/jquery.metisMenu.js"></script>
+    <!-- Custom Js -->
+    <script src="/content/2015/js/custom-scripts.js"></script>
+    <script src="~/Content/js/bootDirective/carousel/"></script>
+    <script src="/content/js/angular.min.js"></script>
+    <script src="/Content/js/sea.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        seajs.config({
+            base: "/content/",
+            alias: {
+                "jquery": "/content/2015/js/jquery-1.10.2.js",
+                "dialog": "/content/js/artDialog/dialog-plus.js"
+            }
+        })
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

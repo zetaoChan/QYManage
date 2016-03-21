@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "全局首页";
+}
+<div class="row" style="height:50%;">
+    <div class="col-md-12 divFullHeight">
+        <div id="myCarousel" class="carousel slide divFullHeight">
+            <ol class="carousel-indicators" style="padding:0;margin-bottom:-15px;">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+            <!-- Carousel items -->
+            <div class="carousel-inner divFullHeight">
+                <div class="active item divFullHeight"><img src="~/Content/images/1.jpg" /></div>
+                <div class="item divFullHeight"><img src="~/Content/images/2.jpg" /></div>
+                <div class="item divFullHeight"><img src="~/Content/images/3.jpg" /></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="height:50%;">
+    <div class="col-md-12">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" id="articleTab">
+            <li class="active" name="news"><a href="~/article/list?type=news" style="cursor:pointer;">新闻</a></li>
+            <li name="notice"><a href="~/article/list?type=notice" style="cursor:pointer;">通知</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content article" ng-controller="indexController" id="articleTabPanel">
+            <div role="tabpanel" class="tab-pane fade in active" id="news">
+                <div class="col-md-6" style="border:thin solid;border-top:none;border-right:none;border-color:#d8d7d7">
+                    <ul>
+                        <li ng-repeat="item in newsList" ng-show="$index % 2 == 0">
+                            <a href="~/article/detail/{{item.id}}">
+                                {{item.title}}
+                                <span class="pull-right">{{item.addTime | date:'yyyy-MM-dd'}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6" style="border:thin solid;border-top:none;border-left:none;border-color:#d8d7d7">
+                    <ul>
+                        <li ng-repeat="item in newsList" ng-show="$index % 2 == 1">
+                            <a href="~/article/detail/{{item.id}}">
+                                {{item.title}}
+                                <span class="pull-right">{{item.addTime | date:'yyyy-MM-dd'}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="notice">
+                <div class="col-md-6" style="border:thin solid;border-top:none;border-right:none;border-color:#d8d7d7">
+                    <ul>
+                        <li ng-repeat="item in noticeList" ng-show="$index % 2 == 0">
+                            <a href="~/article/detail/{{item.id}}">
+                                {{item.title}}
+                                <span class="pull-right">{{item.addTime | date:'yyyy-MM-dd'}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6" style="border:thin solid;border-top:none;border-left:none;border-color:#d8d7d7">
+                    <ul>
+                        <li ng-repeat="item in noticeList" ng-show="$index % 2 == 1">
+                            <a href="~/article/detail/{{item.id}}">
+                                {{item.title}}
+                                <span class="pull-right">{{item.addTime | date:'yyyy-MM-dd'}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        seajs.use("pages/home/index.js", function () {
+            angular.bootstrap(document, ['app']);
+        })
+    </script>
+}
+<script type="text/javascript">
+    $('#articleTab li').hover(function () {
+        var $this = $(this);
+        $('#articleTab li').removeClass('active');
+        $this.addClass('active');
+        $('#articleTabPanel').children('div').removeClass('active').removeClass('in');
+        $('#' + $this.attr('name')).addClass('active').addClass('in');
+    });
+</script>

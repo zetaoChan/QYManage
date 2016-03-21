@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "文章列表";
+}
+<div ng-controller="articleController">
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="/">首页</a></li>
+                <li class="active">文章管理</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-inline">
+                <div class="form-group pull-left">
+                    <button class="form-control" onclick="window.location='/article/add'"><i class="fa fa-fw fa-user-plus"></i> 添加</button>
+                    <button class="form-control" type="button" name="delArticleBtn" ng-click="batchRemove()" disabled><i class="fa fa-fw fa-trash"></i> 删除</button>
+                </div>
+                <div class="form-group pull-right">
+                    <input type="text" class="form-control" ng-model="searchModel.title" placeholder="标题">
+                    <select class="form-control" ng-model="searchModel.pageSize" ng-change="find()" ng-options="item.size as item.text for item in pageSizes"></select>
+                    <button class="btn btn-primary" type="button" ng-click="find()"><i class="fa fa-search"></i> 查询</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th width="30"></th>
+                        <th>序号</th>
+                        <th>标题</th>
+                        <th>文章类型</th>
+                        <th>发布时间</th>
+                        <th>发布者</th>
+                    </tr>
+                    <tbody>
+                        <tr ng-repeat="item in items" ng-cloak>
+                            <td><input type="checkbox" ng-click="selArticle(item.id)" /></td>
+                            <td>{{$index + 1}}</td>
+                            <td>
+                                <a href="~/article/edit/{{item.id}}">
+                                    {{item.title}}
+                                </a>
+                            </td>
+                            <td>{{item.type | ArticleType}}</td>
+                            <td>{{item.addTime | date:'yyyy-MM-dd'}}</td>
+                            <td>{{item.addUser}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6" style="text-align: center;">
+                                <pagination max-size="1" items-per-page="searchModel.pageSize" total-items="searchModel.totalCount" ng-model="searchModel.pageIndex"
+                                            class="pagination-sm" boundary-links="true" rotate="true" ng-change="load()"></pagination>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section scripts{
+    <script type="text/javascript">
+        seajs.use("pages/article/index.js", function () {
+            angular.bootstrap(document, ['app']);
+        })
+    </script>
+}

@@ -1,0 +1,53 @@
+.divFullHeight {
+    height:100%;
+}
+.divFullWidth {
+    width:100%;
+}
+.article li {
+    margin:7px 0;
+    padding:0;
+}
+#articleTabPanel ul {
+margin-left:0;
+padding:10px;
+}
+
+a, a:hover {
+    text-decoration:none;
+}
+
+.row {
+    padding: 5px 0 5px 0;
+}
+
+body {
+    margin-top:60px;
+}
+
+td, th {
+    text-align:center;
+}
+
+th {
+    background-color:#f2f2f2;
+}
+
+button {
+    margin-right: 5px;
+}
+
+/*ÏûÏ¢*/
+.messageDetail{font-size:16px; color:#2d2d2d; padding-bottom:50px; text-align:center;}
+.messageDetail h2{ padding:10px 0 10px; font-size:28px; font-weight:normal;}
+.messageDate{ font-size:14px;border-bottom:1px dashed #ccc; line-height:25px; margin-bottom:30px; padding-bottom:8px;}
+.messageDetail p{ text-indent:2em; padding-bottom:30px; text-align:left; line-height:30px;}
+.messageDetail img{ max-width:980px; margin-bottom:20px;}
+.readed {
+    font-weight:normal;
+    color:#808080;
+}
+.unread {
+    font-weight:bolder;
+    color:#565555;
+}

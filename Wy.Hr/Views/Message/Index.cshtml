@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "部门信息列表";
+}
+<div ng-controller="messageController">
+    <div class="bs-callout bs-callout-primary col-md-12">
+        <h4>
+            消息中心
+        </h4>
+    </div>
+
+    <div class="row">
+        
+        <div class="col-md-12">
+            <div class="btn-group pull-left form-inline">
+                <button class="form-control" type="button" ng-click="openDialog()"><i class="fa fa-fw fa-user-plus"></i> 发布</button>
+                <button class="form-control" type="button" name="delStaffBtn" ng-click="batchRemove()" disabled><i class="fa fa-fw fa-trash"></i> 删除</button>
+            </div>
+            <div class="input-group pull-right">
+                <button class="btn btn-default" ng-class="{'active': searchModel.messageType == ''}" name="messageType" ng-click="changeType('')">全部类型消息</button>
+                <button class="btn btn-default" ng-class="{'active': searchModel.messageType == '0'}" name="messageType" ng-click="changeType('0')">系统消息</button>
+                <button class="btn btn-default" ng-class="{'active': searchModel.messageType == '1'}" name="messageType" ng-click="changeType('1')">用户消息</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default" style="height:100%;overflow:auto;">
+                <table class="table table-hover">
+                    <tr>
+                        <th width="30"></th>
+                        <th>序号</th>
+                        <th>标题</th>
+                        <th>消息时间</th>
+                        <th>消息类型</th>
+                    </tr>
+                    <tbody>
+                        <tr ng-repeat="item in items" ng-cloak ng-class="{true: 'readed', false: 'unread'}[item.isReaded]">
+                            <td><input type="checkbox" ng-click="selRole(item.id)" /></td>
+                            <td>{{$index + 1}}</td>
+                            <td>
+                                <a href="javascript:;" ng-click="detail(item.id)">
+                                    <span ng-hide="item.isReaded">•</span>
+                                    <div ng-bind-html="item.title | to_trusted"></div>
+                                </a>
+                            </td>
+                            <td>{{item.messageDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{item.messageType | MessageType}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6" style="text-align: center;">
+                                <pagination max-size="1" items-per-page="searchModel.pageSize" total-items="searchModel.totalCount" ng-model="searchModel.pageIndex"
+                                            class="pagination-sm" boundary-links="true" rotate="true" ng-change="load()"></pagination>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        seajs.use("pages/message/index.js", function () {
+            angular.bootstrap(document, ['app']);
+        })
+    </script>
+}

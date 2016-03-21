@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "部门信息列表";
+}
+<div ng-controller="fileController">
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="/">首页</a></li>
+                <li class="active">文件管理</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-group pull-left form-inline">
+                <button class="form-control" type="button" name="delFileBtn" ng-click="batchRemove()" disabled><i class="fa fa-fw fa-trash"></i> 删除</button>
+            </div>
+            <div class="btn-group pull-right">
+                <form class="form-inline" action="~/file/upload" enctype="multipart/form-data" method="post">
+                    <input type="file" name="file" />
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> 上传</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">文件列表</h3>
+                </div>
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th width="30"></th>
+                        <th>文件编号</th>
+                        <th>文件名称</th>
+                        <th>上传者</th>
+                        <th>上传时间</th>
+                        <th>下载</th>
+                    </tr>
+                    <tbody>
+                        <tr ng-repeat="item in items" ng-cloak>
+                            <td><input type="checkbox" ng-click="selFile(item.id)" /></td>
+                            <td>{{item.no}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.uploader}}</td>
+                            <td>{{item.uploadTime | date:'yyyy-MM-dd'}}</td>
+                            <td><a href="~/file/downLoad?no={{item.no}}">下载</a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6" style="text-align: center;">
+                                <pagination max-size="1" items-per-page="searchModel.pageSize" total-items="searchModel.totalCount" ng-model="searchModel.pageIndex"
+                                            class="pagination-sm" boundary-links="true" rotate="true" ng-change="load()"></pagination>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section scripts{
+    <script type="text/javascript">
+        seajs.use("pages/file/index.js", function () {
+            angular.bootstrap(document, ['app']);
+        })
+    </script>
+}
