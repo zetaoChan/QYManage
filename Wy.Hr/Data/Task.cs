@@ -24,6 +24,8 @@ namespace Wy.Hr.Data
         public virtual string AddUser { get; set; }
         [LogFiled(Name = "执行者")]
         public virtual string Executor { get; set; }
+        [LogFiled(Name = "期望完成时间")]
+        public virtual DateTime ExpectedTime { get; set; }
         [LogFiled(Name = "完成时间")]
         public virtual DateTime? FinishedTime { get; set; }
     }
@@ -57,6 +59,16 @@ namespace Wy.Hr.Data
                 return null;
             }
         }
+
+        public static void BatchDeleteTask(this DbContext context, int[] ids)
+        {
+            foreach (var id in ids)
+            {
+                context.DeleteTask(id);
+            }
+        }
+
+
 
         public static IQueryable<Task> QueryTask(this DbContext context, TaskQueryCondition condition)
         {

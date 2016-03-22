@@ -60,6 +60,41 @@ namespace Wy.Hr.Controllers
                 return Error(error);
             }
         }
+
+        
+        [HttpPost]
+        [Authorize]
+        public APIResult GetAllPermission()
+        {
+            try
+            {
+                using (var db = new DataContext())
+                {
+                    var list = db.QueryPermission(null)
+                        .OrderBy(m => m.Url)
+                        .Select(m => new PermissionModel()
+                        {
+                            Id = m.Id,
+                            Url = m.Url,
+                            Name = m.Name
+                        })
+                        .ToList();
+                    return Success(list);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var e = ex;
+                var error = e.Message;
+                while (e.InnerException != null)
+                {
+                    e = e.InnerException;
+                    error += "|" + e.Message;
+                }
+                return Error(error);
+            }
+        }
         #endregion
 
         #region 数据操作方法

@@ -47,4 +47,9 @@ namespace Wy.Hr.Models
         public string NewPassword { get; set; }
     }
 
+    public class AutoComplateArgs
+    {
+        public string Query { get; set; }
+    }
+
 }

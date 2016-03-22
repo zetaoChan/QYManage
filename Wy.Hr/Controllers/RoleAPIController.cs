@@ -118,6 +118,40 @@ namespace Wy.Hr.Controllers
             }
         }
 
+        [HttpPost]
+        [Authorize]
+        public APIResult GetAllRole()
+        {
+            try
+            {
+                using (var db = new DataContext())
+                {
+                    var list = db.QueryRole(null)
+                        .OrderBy(m => m.SysName)
+                        .Select(m => new RoleModel()
+                        {
+                            Id = m.Id,
+                            SysName = m.SysName,
+                            Name = m.Name
+                        })
+                        .ToList();
+                    return Success(list);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var e = ex;
+                var error = e.Message;
+                while (e.InnerException != null)
+                {
+                    e = e.InnerException;
+                    error += "|" + e.Message;
+                }
+                return Error(error);
+            }
+        }
+
         #region 数据操作方法
         [HttpPost]
         [Authorize]

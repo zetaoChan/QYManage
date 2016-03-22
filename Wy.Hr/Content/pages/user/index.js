@@ -8,6 +8,19 @@ define(function (require, exports, module) {
         $scope.userModel = {};
         $scope.selUserIds = [];
         $scope.pageSizes = pageSizes;
+        $scope.roleItems = [];
+
+        $scope.loadRoles = function () {
+            $http.post("/api/roleAPI/getAllRole")
+            .success(function (data, status, headers, config) {
+                if (data.success) {
+                    $scope.roleItems = data.content;
+                }
+            })
+            .error(function (data, status, headers, config) {
+                alert(status);
+            });
+        };
 
         //  分页参数
         $scope.searchModel = {
@@ -84,6 +97,21 @@ define(function (require, exports, module) {
             });
         };
 
+        $scope.resetPassword = function (id) {
+            $http.post("/api/userAPI/resetPassword", {id : id})
+            .success(function (data, status, headers, config) {
+                if (data.success) {
+                    createDialog().showTip("重置成功", 1500);
+                }
+                else {
+                    createDialog().showTip("重置失败," + data.message, 2500);
+                }
+            })
+            .error(function (data, status, headers, config) {
+                alert(status);
+            });
+        };
+
         $scope.openDialog = function (model) {
             if (model == undefined) {
                 $scope.userModel = {};
@@ -138,6 +166,7 @@ define(function (require, exports, module) {
 
         $scope.init = function () {
             $scope.load();
+            $scope.loadRoles();
         };
 
         $scope.init();

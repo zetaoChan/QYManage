@@ -64,6 +64,33 @@ namespace Wy.Hr.Controllers
         }
 
         [HttpPost]
+        public APIResult AutoComplate(AutoComplateArgs args)
+        {
+            try
+            {
+                using (var db = new DataContext())
+                {
+                    var list = db.QueryUser(null)
+                        .Where(m => m.UserName.Contains(args.Query))
+                        .Select(m => m.UserName)
+                        .ToList();
+                    return Success(list);
+                }
+            }
+            catch (Exception ex)
+            {
+                var e = ex;
+                var error = e.Message;
+                while (e.InnerException != null)
+                {
+                    e = e.InnerException;
+                    error += "|" + e.Message;
+                }
+                return Error(error);
+            }
+        }
+
+        [HttpPost]
         public APIResult<UserModel> GetDetail(SingleModelArgs args)
         {
             try

@@ -465,6 +465,24 @@
             return v;
         }
     });
+
+    app.filter('TaskStatus', function () {
+        return function (value) {
+            var v = "";
+            switch (value) {
+                case 0:
+                    v = "未开始";
+                    break;
+                case 1:
+                    v = "进行中";
+                    break;
+                default:
+                    v = "已完成"
+            }
+            return v;
+        }
+    });
+    
     //filteend
 
 });

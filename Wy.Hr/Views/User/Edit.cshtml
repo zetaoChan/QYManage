@@ -24,6 +24,14 @@
                             <td>确认密码</td>
                             <td><input type="password" class="form-control" ng-model="userModel.cfgPassword" /></td>
                         </tr>
+                        <tr>
+                            <td>角色</td>
+                            <td>
+                                <div class="col-md-3" ng-repeat="item in roleItems">
+                                    <input type="checkbox" ng-click="selRole(item)" /> {{item.name}}
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

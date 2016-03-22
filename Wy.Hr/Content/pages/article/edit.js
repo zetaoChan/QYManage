@@ -13,15 +13,6 @@ define(function (require, exports, module) {
             $('#previewModal').modal('show');
         }
 
-        $('#executor').typeahead({
-            source: function (query, process) {
-                var parameter = { query: query };
-                $.post('/api/articleAPI/update', parameter, function (data) {
-                    process(data.content);
-                });
-            }
-        });
-
         $scope.update = function () {
             var d = createDialog();
             $scope.articleModel.contents = $('#editor').html();

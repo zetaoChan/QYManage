@@ -9,8 +9,7 @@ namespace Wy.Hr.Common
     public enum TaskStatus {
         未开始 = 0,
         进行中 = 1,
-        已完成 = 2,
-        已结束 = 3
+        已完成 = 2
     }
 
     public enum DepartmentGrade

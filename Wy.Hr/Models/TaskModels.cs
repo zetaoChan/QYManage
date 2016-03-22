@@ -27,6 +27,8 @@ namespace Wy.Hr.Models
         public string Executor { get; set; }
         [JsonProperty("finishedTime")]
         public DateTime? FinishedTime { get; set; }
+        [JsonProperty("expectedTime")]
+        public DateTime ExpectedTime { get; set; }
     }
 
 }

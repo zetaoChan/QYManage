@@ -9,12 +9,20 @@
                 <table class="table table-striped table-bordered" style="text-align:center;">
                     <tbody>
                         <tr>
-                            <td>角色名</td>
+                            <td width="100px">角色名</td>
                             <td><input type="text" class="form-control" ng-model="roleModel.name" /></td>
                         </tr>
                         <tr>
                             <td>角色系统名</td>
                             <td><input type="text" class="form-control" ng-model="roleModel.sysName" /></td>
+                        </tr>
+                        <tr>
+                            <td>权限</td>
+                            <td>
+                                <div class="col-md-3" ng-repeat="item in permissionItems">
+                                    <input type="checkbox" ng-click="selPermission(item)"/> {{item.name}}
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

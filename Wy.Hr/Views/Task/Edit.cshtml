@@ -13,12 +13,16 @@
                             <td><input type="text" class="form-control" ng-model="taskModel.title" /></td>
                         </tr>
                         <tr>
-                            <td>任务内容</td>
-                            <td><input type="text" class="form-control" ng-model="taskModel.contents" /></td>
+                            <td>期望完成时间</td>
+                            <td><input type="text" class="form-control" date-picker ng-model="taskModel.expectedTime" /></td>
                         </tr>
                         <tr>
                             <td>执行者</td>
                             <td><input type="text" class="form-control" id="executor" data-provide="typeahead" ng-model="taskModel.executor" /></td>
+                        </tr>
+                        <tr>
+                            <td>任务内容</td>
+                            <td><textarea class="form-control" ng-model="taskModel.contents"></textarea></td>
                         </tr>
                     </tbody>
                 </table>

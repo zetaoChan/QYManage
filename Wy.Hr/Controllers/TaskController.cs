@@ -12,15 +12,8 @@ namespace Wy.Hr.Controllers
         }
 
         [Authorize]
-        public ActionResult List()
+        public ActionResult MyTask()
         {
-            return View();
-        }
-
-        [Authorize]
-        public ActionResult Detail(int id)
-        {
-            ViewData.Model = id;
             return View();
         }
 

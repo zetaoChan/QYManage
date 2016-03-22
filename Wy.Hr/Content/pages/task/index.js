@@ -5,6 +5,9 @@ define(function (require, exports, module) {
     .controller("taskController", ['$scope', '$http', '$location', 'alertbox', '$modal', "hotkeys", function ($scope, $http, $location, alertbox, $modal, hotkeys) {
         //内容开始
         $scope.items = [];
+        $scope.taskModel = {};
+        $scope.pageSizes = pageSizes;
+        $scope.selTaskItems = [];
 
         //  分页参数
         $scope.searchModel = {
@@ -13,6 +16,15 @@ define(function (require, exports, module) {
             pageSize: 10,
             totalPageCount: 0
         };
+
+        $('#executor').typeahead({
+            source: function (query, process) {
+                var parameter = { query: query };
+                $.post('/api/userAPI/autoComplate', parameter, function (data) {
+                    process(data.content);
+                });
+            }
+        });
 
         //  员工数据加载
         $scope.load = function () {
@@ -37,27 +49,31 @@ define(function (require, exports, module) {
             });
         };
 
-        $scope.selTask = function (id) {
-            if ($scope.selTaskIds.indexOf(id) == -1) {
-                $scope.selTaskIds.push(id);
+        $scope.selTask = function (item) {
+            if ($scope.selTaskItems.indexOf(item) == -1) {
+                $scope.selTaskItems.push(item);
             }
             else {
-                $scope.selTaskIds.remove(id);
+                $scope.selTaskItems.remove(item);
             }
             $('button[name="delTaskBtn"]').attr('disabled', true);
-            if ($scope.selTaskIds.length > 0) {
+            if ($scope.selTaskItems.length > 0) {
                 $('button[name="delTaskBtn"]').removeAttr('disabled');
             }
         }
 
         //  批量删除
         $scope.batchRemove = function () {
-            $http.post("/api/taskAPI/batchRemove", { Ids: $scope.selTaskIds })
+            var ids = [];
+            for (var i = 0; i < $scope.selTaskItems.length; i++) {
+                ids.push($scope.selTaskItems[i].id);
+            }
+            $http.post("/api/taskAPI/batchRemove", { Ids: ids })
             .success(function (data, status, headers, config) {
                 if (data.success) {
                     var delList = [];
                     for (var i = 0; i < $scope.items.length; i++) {
-                        if ($scope.selTaskIds.indexOf($scope.items[i].id) != -1) {
+                        if (ids.indexOf($scope.items[i].id) != -1) {
                             delList.push($scope.items[i]);
                         }
                     }
@@ -65,6 +81,7 @@ define(function (require, exports, module) {
                         $scope.items.remove(delList[i]);
                     }
                     createDialog().showTip("删除成功", 1500);
+                    $('button[name="delTaskBtn"]').attr('disabled', true);
                 }
                 else {
                     createDialog().showTip("删除失败," + data.message, 2500);
@@ -77,13 +94,14 @@ define(function (require, exports, module) {
 
         $scope.openDialog = function (model) {
             if (model == undefined) {
-                $scope.TaskModel = {};
+                $scope.taskModel = {};
             }
             else {
                 for (var i = 0; i < $scope.items.length; i++) {
                     if ($scope.items[i].id == model.id) {
                         var str = JSON.stringify($scope.items[i]);
-                        $scope.TaskModel = JSON.parse(str);
+                        $scope.taskModel = JSON.parse(str);
+                        $scope.taskModel.expectedTime = new Date($scope.taskModel.expectedTime).format('yyyy-MM-dd');
                         break;
                     }
                 }
@@ -96,6 +114,7 @@ define(function (require, exports, module) {
             var data = $scope.taskModel;
             var type = 'add';
             var typeStr = "添加";
+            console.log(data.id);
             if (data.id != undefined) {
                 typeStr = "修改";
                 type = 'update';
@@ -131,6 +150,7 @@ define(function (require, exports, module) {
             $scope.load();
         };
 
+        $scope.init();
         //内容结束
     }]);
 });

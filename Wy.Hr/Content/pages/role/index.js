@@ -8,6 +8,7 @@ define(function (require, exports, module) {
         $scope.roleModel = {};
         $scope.selRoleIds = [];
         $scope.pageSizes = pageSizes;
+        $scope.permissionItems = [];
 
 
         //  分页参数
@@ -46,6 +47,31 @@ define(function (require, exports, module) {
                 alert(status);
             });
         };
+
+        $scope.loadPermissions = function () {
+            $http.post("/api/permissionAPI/getAllPermission")
+            .success(function (data, status, headers, config) {
+                if (data.success) {
+                    $scope.permissionItems = data.content;
+                }
+            })
+            .error(function (data, status, headers, config) {
+                alert(status);
+            });
+        };
+        
+        $scope.selPermission = function (item) {
+            if ($scope.selRoleIds.indexOf(id) == -1) {
+                $scope.selRoleIds.push(id);
+            }
+            else {
+                $scope.selRoleIds.remove(id);
+            }
+            $('button[name="delRoleBtn"]').attr('disabled', true);
+            if ($scope.selRoleIds.length > 0) {
+                $('button[name="delRoleBtn"]').removeAttr('disabled');
+            }
+        }
 
         $scope.selRole = function (id) {
             if ($scope.selRoleIds.indexOf(id) == -1) {
@@ -139,6 +165,7 @@ define(function (require, exports, module) {
 
         $scope.init = function () {
             $scope.load();
+            $scope.loadPermissions();
         };
 
         $scope.init();

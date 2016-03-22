@@ -7,7 +7,6 @@ namespace Wy.Hr.Controllers
     public class RoleController : BaseController
     {
 
-        [PermissionFilter]
         public ActionResult Index()
         {
             return View();

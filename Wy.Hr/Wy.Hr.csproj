@@ -615,8 +615,8 @@
     <Content Include="Content\pages\article\list.js" />
     <Content Include="Content\pages\base.js" />
     <Content Include="Content\pages\article\index.js" />
-    <Content Include="Content\pages\position\index.js" />
     <Content Include="Content\pages\permission\index.js" />
+    <Content Include="Content\pages\position\index.js" />
     <Content Include="Content\pages\sysConfig\index.js" />
     <Content Include="Content\pages\file\index.js" />
     <Content Include="Content\pages\department\index.js" />
@@ -627,6 +627,7 @@
     <Content Include="Content\pages\member\index.js" />
     <Content Include="Content\pages\message\index.js" />
     <Content Include="Content\pages\role\index.js" />
+    <Content Include="Content\pages\task\myTask.js" />
     <Content Include="Content\pages\task\index.js" />
     <Content Include="Content\pages\staff\index.js" />
     <Content Include="Content\pages\user\changePassword.js" />
@@ -824,7 +825,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\404.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\User\UserProfile.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Role\Edit.cshtml" />
     <Content Include="Views\Task\Detail.cshtml" />
@@ -833,16 +833,12 @@
     <Content Include="Views\Shared\footer.cshtml" />
     <Content Include="Views\Common\ExportDialog.cshtml" />
     <Content Include="Views\Common\TissueTree.cshtml" />
-    <Content Include="Views\User\List.cshtml" />
     <Content Include="Views\Message\Detail.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Department\Index.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\File\Index.cshtml" />
-    <Content Include="Views\User\Info.cshtml">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="Views\SysConfig\Index.cshtml" />
     <Content Include="Views\SysConfig\Edit.cshtml" />
     <Content Include="Views\Article\List.cshtml" />
@@ -855,10 +851,11 @@
     <Content Include="Views\Staff\Edit.cshtml" />
     <Content Include="Views\Staff\Index.cshtml" />
     <Content Include="Views\Staff\Info.cshtml" />
-    <Content Include="Views\Permission\Index.cshtml" />
     <Content Include="Views\Task\Index.cshtml" />
-    <Content Include="Views\Permission\Edit.cshtml" />
     <Content Include="Views\Task\Edit.cshtml" />
+    <Content Include="Views\Task\MyTask.cshtml" />
+    <Content Include="Views\Permission\Edit.cshtml" />
+    <Content Include="Views\Permission\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

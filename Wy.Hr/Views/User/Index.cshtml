@@ -2,8 +2,13 @@
     ViewBag.Title = "用户信息列表";
 }
 <div ng-controller="userController">
-    <div class="bs-callout bs-callout-primary col-md-12">
-        <h4>用户管理</h4>
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="/">首页</a></li>
+                <li class="active">用户管理</li>
+            </ol>
+        </div>
     </div>
 
     <div class="row">
@@ -24,7 +29,49 @@
     </div>
 
     <div class="row">
-        @Html.Partial("List")
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        用户列表
+                    </h3>
+                </div>
+                <table class="table table-hover table-bordered">
+                    <tr>
+                        <th width="30"></th>
+                        <th>用户名</th>
+                        <th>邮箱</th>
+                        <th>创建时间</th>
+                        <th>创建者</th>
+                        <th>编辑</th>
+                        <th>密码</th>
+                    </tr>
+                    <tbody>
+                        <tr ng-repeat="item in items" ng-cloak>
+                            <td><input type="checkbox" ng-click="selUser(item.id)" /></td>
+                            <td>{{item.userName}}</td>
+                            <td>{{item.email}}</td>
+                            <td>{{item.createTime | date:'yyyy-MM-dd'}}</td>
+                            <td>{{item.creator}}</td>
+                            <td>
+                                <a href="javascript:;" ng-click="openDialog(item)"><i class="fa fa-edit"></i></a>
+                            </td>
+                            <td>
+                                <a href="javascript:;" ng-click="resetPassword(item.id)">重置</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="7" style="text-align: center;">
+                                <pagination max-size="1" items-per-page="searchModel.pageSize" total-items="searchModel.totalCount" ng-model="searchModel.pageIndex"
+                                            class="pagination-sm" boundary-links="true" rotate="true" ng-change="load()"></pagination>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
     </div>
 
     @Html.Partial("Edit")
