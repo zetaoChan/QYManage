@@ -1,22 +1,20 @@
 define(function (require, exports, module) {
     require("pages/base.js?v=1.1");
-    require("js/json2.js");
 
     angular.module("app")
     .controller("messageController", ['$scope', '$http', '$location', 'alertbox', '$modal', "hotkeys", function ($scope, $http, $location, alertbox, $modal, hotkeys) {
         //内容开始
         $scope.items = [];
-        $scope.itemModel = {};
-        $scope.viewType = "list";
-        $scope.selMessageIds = [];
+        $scope.msgModel = {};
+        $scope.selMessages = [];
+        $scope.detailModel = {};
 
         //  分页参数
         $scope.searchModel = {
             totalCount: 0,
             pageIndex: 0,
             pageSize: 10,
-            totalPageCount: 0,
-            messageType: ''
+            totalPageCount: 0
         };
 
         //  查询方法
@@ -48,27 +46,31 @@ define(function (require, exports, module) {
             });
         };
 
-        $scope.selMessage = function (id) {
-            if ($scope.selMessageIds.indexOf(id) == -1) {
-                $scope.selMessageIds.push(id);
+        $scope.selMsg = function (item) {
+            if ($scope.selMessages.indexOf(item) == -1) {
+                $scope.selMessages.push(item);
             }
             else {
-                $scope.selMessageIds.remove(id);
+                $scope.selMessages.remove(item);
             }
-            $('button[name="delMessageBtn"]').attr('disabled', true);
-            if ($scope.selMessageIds.length > 0) {
-                $('button[name="delMessageBtn"]').removeAttr('disabled');
+            $('button[name="delMsgBtn"]').attr('disabled', true);
+            if ($scope.selMessages.length > 0) {
+                $('button[name="delMsgBtn"]').removeAttr('disabled');
             }
         }
 
         //  批量删除
         $scope.batchRemove = function () {
-            $http.post("/api/messageAPI/batchRemove", { Ids: $scope.selMessageIds })
+            var ids = [];
+            for (var i = 0; i < $scope.selMessages.length; i++){
+                ids.push($scope.selMessages[i].id);
+            }
+            $http.post("/api/messageAPI/batchRemove", { Ids: ids })
             .success(function (data, status, headers, config) {
                 if (data.success) {
                     var delList = [];
                     for (var i = 0; i < $scope.items.length; i++) {
-                        if ($scope.selMessageIds.indexOf($scope.items[i].id) != -1) {
+                        if ($scope.selMessages.indexOf($scope.items[i]) != -1) {
                             delList.push($scope.items[i]);
                         }
                     }
@@ -86,19 +88,21 @@ define(function (require, exports, module) {
             });
         };
 
-        $scope.back = function () {
-            $scope.load();
-            $scope.viewType = "list";
+        $scope.seeDetail = function (item) {
+            $scope.detailModel = item;
+            $('#msgDetailModal').modal('show');
+        };
+
+        $scope.openDialog = function () {
+            $scope.msgModel = {};
+            $('#msgAddModal').modal('show');
         }
 
-        $scope.detail = function (id) {
-            var d = createDialog();
-            $http.post("/api/messageAPI/getDetail", { id: id })
+        $scope.send = function () {
+            $http.post("/api/messageAPI/add", $scope.msgModel)
             .success(function (data, status, headers, config) {
                 if (data.success) {
-                    $scope.itemModel = data.content;
-                    $scope.viewType = "detail";
-                    d.close();
+                    $scope.load();
                 }
             })
             .error(function (data, status, headers, config) {
@@ -106,10 +110,14 @@ define(function (require, exports, module) {
             });
         };
 
-        $scope.changeType = function (type) {
-            $scope.searchModel.messageType = type;
-            $scope.load();
-        }
+        $('#recipientName').typeahead({
+            source: function (query, process) {
+                var parameter = { query: query };
+                $.post('/api/userAPI/autoComplate', parameter, function (data) {
+                    process(data.content);
+                });
+            }
+        });
 
         $scope.init = function () {
             $scope.load();

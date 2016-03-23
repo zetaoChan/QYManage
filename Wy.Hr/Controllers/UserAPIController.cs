@@ -7,6 +7,7 @@ using Wy.Hr.Common;
 using Wy.Hr.Data;
 using System.Web.Configuration;
 using Wy.Hr.Models;
+using System.Collections.Generic;
 
 namespace Wy.Hr.Controllers
 {
@@ -38,6 +39,7 @@ namespace Wy.Hr.Controllers
                             Email = m.Email,
                             CreateTime = m.CreateTime,
                             Creator = m.Creator,
+                            RoleIds = m.RoleIds
                         })
                         .ToPagedList(args.PageIndex, args.PageSize);
                     return Success(new PagedResult<UserModel>()
@@ -117,6 +119,44 @@ namespace Wy.Hr.Controllers
                 return Error<UserModel>(error);
             }
         }
+
+        [HttpPost]
+        public string[] GetPermissionUrls()
+        {
+            try
+            {
+                using (var db = new DataContext())
+                {
+                    var currentUser = db.GetSingleUserByUserName(User.Identity.Name);
+                    string[] roles = currentUser.RoleIds.Split(',');
+                    var roleList = db.QueryRole(null).Where(m => roles.Contains(m.Id.ToString())).ToList();
+                    List<Permission> resultList = new List<Permission>();
+                    foreach (var item in roleList)
+                    {
+                        string[] permissions = item.PermissionIds.Split(',');
+                        var permissionList = db.QueryPermission(null).Where(m => permissions.Contains(m.Id.ToString())).ToList();
+                        if (permissionList != null)
+                        {
+                            resultList.AddRange(permissionList);
+                        }
+                    }
+                    string[] permissionUrls = resultList.Distinct().Select(m => m.Url).ToArray();
+                    return permissionUrls;
+                }
+            }
+            catch (Exception ex)
+            {
+                var e = ex;
+                var error = e.Message;
+                while (e.InnerException != null)
+                {
+                    e = e.InnerException;
+                    error += "|" + e.Message;
+                }
+                return new string[1];
+            }
+        }
+        
         #endregion
 
         #region 数据操作方法
@@ -133,11 +173,14 @@ namespace Wy.Hr.Controllers
             {
                 using (var db = new DataContext())
                 {
-                    Mapper.CreateMap<UserAddModel, User>();
-                    var entity = Mapper.Map<UserAddModel, User>(model);
+                    var entity = new User { 
+                        Creator = User.Identity.Name,
+                        CreateTime = DateTime.Now.ToLocalTime(),
+                        UserName = model.UserName,
+                        Email = model.Email,
+                        RoleIds = model.RoleIds
+                    };
                     entity.Password = CommonUtil.MD5(entity.Password, Encoding.GetEncoding("UTF-8"));
-                    entity.Creator = User.Identity.Name;
-                    entity.CreateTime = DateTime.Now.ToLocalTime();
                     db.AddToUser(entity);
                     db.SaveChanges();
                     return Success();

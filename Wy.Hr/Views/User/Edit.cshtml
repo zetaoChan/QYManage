@@ -28,7 +28,7 @@
                             <td>角色</td>
                             <td>
                                 <div class="col-md-3" ng-repeat="item in roleItems">
-                                    <input type="checkbox" ng-click="selRole(item)" /> {{item.name}}
+                                    <input type="checkbox" name="role" value="{{item.id}}" /> {{item.name}}
                                 </div>
                             </td>
                         </tr>

@@ -20,7 +20,7 @@
                             <td>权限</td>
                             <td>
                                 <div class="col-md-3" ng-repeat="item in permissionItems">
-                                    <input type="checkbox" ng-click="selPermission(item)"/> {{item.name}}
+                                    <input type="checkbox" name="permission" value="{{item.id}}" /> {{item.name}}
                                 </div>
                             </td>
                         </tr>

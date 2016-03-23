@@ -10,29 +10,20 @@ namespace Wy.Hr.Data
     public class Message
     {
         public virtual int Id { get; set; }
-        [ForeignKey("SenderId")]
-        public virtual User Sender { get; set; }
         [LogFiled(Name = "发送人")]
-        public virtual int SenderId { get; set; }
-        [ForeignKey("RecipientId")]
-        public virtual User Recipient { get; set; }
+        public virtual string SenderName { get; set; }
         [LogFiled(Name = "接收人")]
-        public virtual int RecipientId { get; set; }
+        public virtual string RecipientName { get; set; }
         [LogFiled(Name = "是否已读")]
         public virtual bool IsReaded { get; set; }
-        [LogFiled(Name = "信息日期")]
-        public virtual DateTime MessageDate { get; set; }
-        [LogFiled(Name = "信息内容")]
+        [LogFiled(Name = "发送日期")]
+        public virtual DateTime SendDate { get; set; }
+        [LogFiled(Name = "消息内容")]
         public virtual string Contents { get; set; }
-        [LogFiled(Name = "信息标题")]
-        public virtual string Title { get; set; }
-        [LogFiled(Name = "信息类型")]
-        public virtual MessageType MessageType { get; set; }
     }
 
     public class MessageQueryCondition
     {
-        public MessageType? MessageType { get; set; }
         public bool? IsReaded { get; set; }
     }
 
@@ -66,9 +57,6 @@ namespace Wy.Hr.Data
         {
             var query = context.Set<Message>().AsQueryable();
             if(condition != null){
-                if(condition.MessageType.HasValue){
-                    query = query.Where(m => m.MessageType == condition.MessageType.Value);
-                }
                 if (condition.IsReaded.HasValue)
                 {
                     query = query.Where(m => m.IsReaded == condition.IsReaded.Value);

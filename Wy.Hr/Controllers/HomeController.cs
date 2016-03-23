@@ -7,8 +7,7 @@ namespace Wy.Hr.Controllers
 {
     public class HomeController : BaseController
     {
-
-        [CustomAuth]
+        [PermissionFilter]
         public ActionResult Index()
         {
             return View();

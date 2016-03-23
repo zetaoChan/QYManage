@@ -8,6 +8,7 @@ using Wy.Hr.Attribute;
 
 namespace Wy.Hr
 {
+    
     public class BaseController : Controller
     {
        

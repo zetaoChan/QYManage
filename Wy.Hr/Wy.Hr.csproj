@@ -856,6 +856,7 @@
     <Content Include="Views\Task\MyTask.cshtml" />
     <Content Include="Views\Permission\Edit.cshtml" />
     <Content Include="Views\Permission\Index.cshtml" />
+    <Content Include="Views\Message\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

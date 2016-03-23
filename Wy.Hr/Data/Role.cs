@@ -14,8 +14,8 @@ namespace Wy.Hr.Data
         public virtual string Name { get; set; }
         [LogFiled(Name = "系统角色名")]
         public virtual string SysName { get; set; }
-        [LogFiled(Name = "用户")]
-        public virtual List<User> Users { get; set; }
+        [LogFiled(Name = "权限Id数组")]
+        public virtual string PermissionIds { get; set; }
     }
 
     public class RoleQueryCondition

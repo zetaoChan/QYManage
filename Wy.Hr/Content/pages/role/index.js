@@ -10,7 +10,6 @@ define(function (require, exports, module) {
         $scope.pageSizes = pageSizes;
         $scope.permissionItems = [];
 
-
         //  分页参数
         $scope.searchModel = {
             totalCount: 0,
@@ -60,19 +59,6 @@ define(function (require, exports, module) {
             });
         };
         
-        $scope.selPermission = function (item) {
-            if ($scope.selRoleIds.indexOf(id) == -1) {
-                $scope.selRoleIds.push(id);
-            }
-            else {
-                $scope.selRoleIds.remove(id);
-            }
-            $('button[name="delRoleBtn"]').attr('disabled', true);
-            if ($scope.selRoleIds.length > 0) {
-                $('button[name="delRoleBtn"]').removeAttr('disabled');
-            }
-        }
-
         $scope.selRole = function (id) {
             if ($scope.selRoleIds.indexOf(id) == -1) {
                 $scope.selRoleIds.push(id);
@@ -112,6 +98,7 @@ define(function (require, exports, module) {
         };
 
         $scope.openDialog = function (model) {
+            $('input[name="permission"]').removeAttr('checked');
             if (model == undefined) {
                 $scope.roleModel = {};
             }
@@ -123,13 +110,29 @@ define(function (require, exports, module) {
                         break;
                     }
                 }
+                if ($scope.roleModel.permissionIds != undefined) {
+                    var idsArray = $scope.roleModel.permissionIds.split(',');
+                    $('input[name="permission"]').each(function () {
+                        if (idsArray.indexOf($(this).val() + "") != -1) {
+                            this.checked = true;
+                        }
+                    });
+                }
             }
             $('#roleEditModal').modal('show');
         }
 
         $scope.save = function () {
+            var permissionIds = '';
+            $('input[name="permission"]').each(function () {
+                if (this.checked) {
+                    permissionIds += ',' + $(this).val();
+                }
+            });
+            permissionIds = permissionIds.substr(1);
             var d = createDialog();
             var data = $scope.roleModel;
+            data.permissionIds = permissionIds;
             var type = 'add';
             var typeStr = "添加";
             if (data.id != undefined) {

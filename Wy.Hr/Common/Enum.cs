@@ -129,12 +129,6 @@ namespace Wy.Hr.Common
         已读 = 1
     }
 
-    public enum MessageType
-    {
-        系统消息 = 0,
-        用户消息 = 1
-    }
-
     public enum ArticleType
     {
         新闻 = 0,

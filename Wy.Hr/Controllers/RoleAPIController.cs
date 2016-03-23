@@ -28,7 +28,8 @@ namespace Wy.Hr.Controllers
                         {
                             Id = m.Id,
                             Name = m.Name,
-                            SysName = m.SysName
+                            SysName = m.SysName,
+                            PermissionIds = m.PermissionIds
                         })
                         .ToPagedList(args.PageIndex, args.PageSize);
                     return Success(new PagedResult<RoleModel>()
@@ -161,8 +162,11 @@ namespace Wy.Hr.Controllers
             {
                 using (var db = new DataContext())
                 {
-                    Mapper.CreateMap<RoleModel, Role>();
-                    var entity = Mapper.Map<RoleModel, Role>(model);
+                    var entity = new Role { 
+                        Name = model.Name,
+                        SysName = model.SysName,
+                        PermissionIds = model.PermissionIds
+                    };
                     db.AddToRole(entity);
                     db.SaveChanges();
                     return Success();
@@ -190,8 +194,9 @@ namespace Wy.Hr.Controllers
                 using (var db = new DataContext())
                 {
                     var entity = db.GetSingleRole(model.Id);
-                    Mapper.CreateMap<RoleModel, Role>();
-                    Mapper.Map<RoleModel, Role>(model, entity);
+                    entity.Name = model.Name;
+                    entity.SysName = model.SysName;
+                    entity.PermissionIds = model.PermissionIds;
                     db.SaveChanges();
                     return Success();
                 }

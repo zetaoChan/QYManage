@@ -113,6 +113,7 @@ define(function (require, exports, module) {
         };
 
         $scope.openDialog = function (model) {
+            $('input[name="role"]').removeAttr('checked');
             if (model == undefined) {
                 $scope.userModel = {};
             }
@@ -124,13 +125,29 @@ define(function (require, exports, module) {
                         break;
                     }
                 }
+                if ($scope.userModel.roleIds != undefined) {
+                    var idsArray = $scope.userModel.roleIds.split(',');
+                    $('input[name="role"]').each(function () {
+                        if (idsArray.indexOf($(this).val() + "") != -1) {
+                            this.checked = true;
+                        }
+                    });
+                }
             }
             $('#userEditModal').modal('show');
         }
 
         $scope.save = function () {
+            var roleIds = '';
+            $('input[name="role"]').each(function () {
+                if (this.checked) {
+                    roleIds += ',' + $(this).val();
+                }
+            });
+            roleIds = roleIds.substr(1);
             var d = createDialog();
             var data = $scope.userModel;
+            data.roleIds = roleIds;
             var type = 'add';
             var typeStr = "添加";
             if (data.id != undefined) {

@@ -1,37 +1,38 @@
 ﻿using System.Web.Mvc;
+using Wy.Hr.Attribute;
 
 namespace Wy.Hr.Controllers
 {
     public class ArticleController : BaseController
     {
 
-        [Authorize]
+        [PermissionFilter]
         public ActionResult Index()
         {
             return View();
         }
 
-        [Authorize]
+        [PermissionFilter]
         public ActionResult List(string type)
         {
             ViewData.Model = type;
             return View();
         }
 
-        [Authorize]
+        [PermissionFilter]
         public ActionResult Add()
         {
             return View();
         }
 
-        [Authorize]
+        [PermissionFilter]
         public ActionResult Edit(int id)
         {
             ViewData.Model = id;
             return View();
         }
 
-        [Authorize]
+        [PermissionFilter]
         public ActionResult Detail(int id)
         {
             ViewData.Model = id;

@@ -15,6 +15,8 @@ namespace Wy.Hr.Models
         public string Name { get; set; }
         [JsonProperty("sysName")]
         public string SysName { get; set; }
+        [JsonProperty("permissionIds")]
+        public string PermissionIds { get; set; }
     }
 
     public class RoleBatchDelArgs

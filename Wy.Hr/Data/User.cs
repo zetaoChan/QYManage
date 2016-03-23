@@ -21,8 +21,8 @@ namespace Wy.Hr.Data
         public virtual DateTime CreateTime { get; set; }
         [LogFiled(Name = "创建者")]
         public virtual string Creator { get; set; }
-        [LogFiled(Name = "角色")]
-        public virtual List<Role> Roles { get; set; }
+        [LogFiled(Name = "角色Ids")]
+        public virtual string RoleIds { get; set; }
 
        
     }

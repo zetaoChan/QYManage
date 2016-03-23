@@ -20,6 +20,8 @@ namespace Wy.Hr.Models
         public DateTime CreateTime { get; set; }
         [JsonProperty("creator")]
         public string Creator { get; set; }
+        [JsonProperty("roleIds")]
+        public string RoleIds { get; set; }
     }
 
     public class UserAddModel
@@ -27,6 +29,7 @@ namespace Wy.Hr.Models
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string RoleIds { get; set; }
     }
 
     public class UserEditModel
@@ -34,6 +37,7 @@ namespace Wy.Hr.Models
         public int Id { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
+        public string RoleIds { get; set; }
     }
 
     public class UserBatchDelArgs

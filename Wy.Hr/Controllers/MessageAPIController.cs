@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using AutoMapper;
@@ -24,7 +23,6 @@ namespace Wy.Hr.Controllers
                 using (var db = new DataContext())
                 {
                     var condition = new MessageQueryCondition { 
-                        MessageType = args.MessageType,
                         IsReaded = args.IsReaded
                     };
                     var result = db.QueryMessage(condition)
@@ -33,12 +31,10 @@ namespace Wy.Hr.Controllers
                         {
                             Id = m.Id,
                             Contents = m.Contents,
-                            MessageDate = m.MessageDate,
+                            SendDate = m.SendDate,
                             IsReaded = m.IsReaded,
-                            MessageType = m.MessageType,
-                            //RecipientName = m.Recipient.Name,
-                            //SenderName = m.Sender.Name,
-                            Title = m.Title
+                            RecipientName = m.RecipientName,
+                            SenderName = m.SenderName
                         })
                         .ToPagedList(args.PageIndex, args.PageSize);
                     return Success<PagedResult<MessageModel>>(new PagedResult<MessageModel>()
@@ -62,45 +58,6 @@ namespace Wy.Hr.Controllers
                     error += "|" + e.Message;
                 }
                 return Error<PagedResult<MessageModel>>(error);
-            }
-        }
-
-        [Authorize]
-        [HttpPost]
-        public APIResult<List<MessageModel>> GetList(MessagePagedArgs args)
-        {
-            try
-            {
-                using (var db = new DataContext())
-                {
-                    var list = db.QueryMessage(null)
-                        .OrderByDescending(m => m.Id)
-                        .Select(m => new MessageModel()
-                        {
-                            Id = m.Id,
-                            Contents = m.Contents,
-                            MessageDate = m.MessageDate,
-                            IsReaded = m.IsReaded,
-                            MessageType = m.MessageType,
-                            //RecipientName = m.Recipient.Name,
-                            //SenderName = m.Sender.Name,
-                            Title = m.Title
-                        })
-                        .ToList();
-                    return Success<List<MessageModel>>(list);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                var e = ex;
-                var error = e.Message;
-                while (e.InnerException != null)
-                {
-                    e = e.InnerException;
-                    error += "|" + e.Message;
-                }
-                return Error<List<MessageModel>>(error);
             }
         }
 
@@ -147,39 +104,14 @@ namespace Wy.Hr.Controllers
             {
                 using (var db = new DataContext())
                 {
-                    Mapper.CreateMap<MessageModel, Message>();
-                    var entity = Mapper.Map<MessageModel, Message>(model);
+                    var entity = new Message { 
+                        Contents = model.Contents,
+                        IsReaded = false,
+                        RecipientName = model.RecipientName,
+                        SendDate = DateTime.Now.ToLocalTime(),
+                        SenderName = User.Identity.Name
+                    };
                     db.AddToMessage(entity);
-                    db.SaveChanges();
-                    return Success();
-                }
-            }
-            catch (Exception ex)
-            {
-                var e = ex;
-                var error = e.Message;
-                while (e.InnerException != null)
-                {
-                    e = e.InnerException;
-                    error += "|" + e.Message;
-                }
-                return Error<MessageModel>(error);
-            }
-        }
-
-        [Authorize]
-        [HttpPost]
-        public APIResult Update(MessageModel model)
-        {
-            try
-            {
-                using (var db = new DataContext())
-                {
-                    var entity = db.GetSingleMessage(model.Id);
-                    if (entity == null) throw new Exception("消息不存在");
-                    Mapper.CreateMap<MessageModel, Message>()
-                        .ForMember("Id", opt => opt.Ignore());
-                    Mapper.Map<MessageModel, Message>(model, entity);
                     db.SaveChanges();
                     return Success();
                 }

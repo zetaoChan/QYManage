@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Wy.Hr.Data;
+using System.Linq;
 
 namespace Wy.Hr.Attribute
 {
@@ -26,23 +27,28 @@ namespace Wy.Hr.Attribute
                 var controllerName = filterContext.RouteData.Values["controller"].ToString();
                 var actionName = filterContext.RouteData.Values["action"].ToString();
                 User currentUser = null;
-                Role role = null;
                 using (var db = new DataContext())
                 {
                     currentUser = db.GetSingleUserByUserName(filterContext.HttpContext.User.Identity.Name);
-                    role = db.GetSingleRole(1);
-                }
-
-                if (currentUser.Roles.Contains(role))
-                {
-                    //filterContext.RequestContext.HttpContext.Response.Redirect("~/home/Login");
-                }
-                else
-                {
-                    filterContext.RequestContext.HttpContext.Response.Redirect("~/Error");
+                    string[] roles = currentUser.RoleIds.Split(',');
+                    var roleList = db.QueryRole(null).Where(m => roles.Contains(m.Id.ToString())).ToList();
+                    List<Permission> resultList = new List<Permission>();
+                    foreach(var item in roleList){
+                        string[] permissions = item.PermissionIds.Split(',');
+                        var permissionList = db.QueryPermission(null).Where(m => permissions.Contains(m.Id.ToString())).ToList();
+                        if(permissionList != null){
+                            resultList.AddRange(permissionList);
+                        }
+                    }
+                    string[] permissionUrls = resultList.Distinct().Select(m => m.Url).ToArray();
+                    var url = ("/" + filterContext.ActionDescriptor.ControllerDescriptor.ControllerName + "/"
+                        + filterContext.ActionDescriptor.ActionName).ToLower();
+                    if (!permissionUrls.Contains(url) && url != "/home/index")
+                    {
+                        filterContext.RequestContext.HttpContext.Response.Redirect("~/");
+                    }
                 }
             }
-            
         }
 
         /// <summary>
