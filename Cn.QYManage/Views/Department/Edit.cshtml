@@ -1,0 +1,43 @@
+﻿<div class="modal fade" id="departmentEditModal" tabindex="-1" role="dialog" aria-labelledby="departmentModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="departmentModalLabel">组织编辑</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>编号</td>
+                        <td><input type="text" class="form-control" name="no" ng-model="deptModel.no" placeholder="部门编号" required></td>
+                    </tr>
+                    <tr>
+                        <td>名称</td>
+                        <td><input type="text" class="form-control" name="name" ng-model="deptModel.name" placeholder="部门名称" required></td>
+                    </tr>
+                    <tr>
+                        <td>级别</td>
+                        <td>
+                            <select name="grade" class="form-control" ng-model="deptModel.grade">
+                                <option value="">请选择级别</option>
+                                <option value="0">公司</option>
+                                <option value="1">部门</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>上级</td>
+                        <td>
+                            <select name="parent" class="form-control" ng-model="deptModel.parentId" ng-options="item.id as item.label for item in selDepts">
+                                <option value="">无</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" ng-click="save()"><i class="fa fa-fw fa-save"></i> 保存</button>
+            </div>
+        </div>
+    </div>
+</div>

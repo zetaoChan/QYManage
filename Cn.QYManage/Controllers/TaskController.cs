@@ -1,0 +1,22 @@
+﻿using System.Web.Mvc;
+using Cn.QYManage.Attribute;
+
+namespace Cn.QYManage.Controllers
+{
+    public class TaskController : BaseController
+    {
+
+        [PermissionFilter]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [PermissionFilter]
+        public ActionResult MyTask()
+        {
+            return View();
+        }
+
+    }
+}
